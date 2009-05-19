@@ -17,11 +17,25 @@ class FunTest < Test::Unit::TestCase
       @fun = BERTRPC::Fun.new(svc, :mymod, :myfun)
     end
 
-    should "call" do
-      req = @fun.encode_ruby_request([:call, :mymod, :myfun, [1, 2, 3]])
+    should "call with single-arity" do
+      req = @fun.encode_ruby_request([:call, :mymod, :myfun, [1]])
+      res = @fun.encode_ruby_request([:reply, 2])
+      @fun.expects(:sync_request).with(req).returns(res)
+      assert_equal 2, @fun.call(1)
+    end
+
+    should "call with single-arity array" do
+      req = @fun.encode_ruby_request([:call, :mymod, :myfun, [[1, 2, 3]]])
       res = @fun.encode_ruby_request([:reply, [4, 5, 6]])
       @fun.expects(:sync_request).with(req).returns(res)
       assert_equal [4, 5, 6], @fun.call([1, 2, 3])
+    end
+
+    should "call with multi-arity" do
+      req = @fun.encode_ruby_request([:call, :mymod, :myfun, [1, 2, 3]])
+      res = @fun.encode_ruby_request([:reply, [4, 5, 6]])
+      @fun.expects(:sync_request).with(req).returns(res)
+      assert_equal [4, 5, 6], @fun.call(1, 2, 3)
     end
 
     context "converter" do

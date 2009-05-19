@@ -26,8 +26,12 @@ Example
     require 'bertrpc'
     
     svc = BERTRPC::Service.new('localhost', 9999)
-    svc.calc.add.call([1, 2])
+    svc.calc.add.call(1, 2)
     # => 3
+
+This generates a BERT-RPC request like so:
+
+    -> {call, calc, add, [1, 2]}
 
 
 Copyright

@@ -6,7 +6,8 @@ module BERTRPC
       @fun = fun
     end
 
-    def call(args)
+    def call(*args)
+      args = [*args]
       bert_request = encode_ruby_request([:call, @mod, @fun, args])
       bert_response = sync_request(bert_request)
       decode_bert_response(bert_response)
