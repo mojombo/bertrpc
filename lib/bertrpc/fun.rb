@@ -50,6 +50,8 @@ module BERTRPC
           raise ServerError.new(err[2])
         when :user
           raise UserError.new(err[2])
+        when :proxy
+          raise ProxyError.new(err[2])
         else
           raise
       end

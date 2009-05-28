@@ -14,4 +14,8 @@ module BERTRPC
   class UserError < BERTRPCError
 
   end
+
+  class ProxyError < BERTRPCError
+
+  end
 end

@@ -113,6 +113,13 @@ class FunTest < Test::Unit::TestCase
           @fun.decode_bert_response(req)
         end
       end
+
+      should "raise a ProxyError error when proxy level error is returned" do
+        req = @fun.encode_ruby_request([:error, [:proxy, 1, "invalid"]])
+        assert_raises(BERTRPC::ProxyError) do
+          @fun.decode_bert_response(req)
+        end
+      end
     end
   end
 end
