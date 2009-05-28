@@ -19,8 +19,11 @@ module BERTRPC
       sock = TCPSocket.new(@svc.host, @svc.port)
       sock.write([bert_request.length].pack("N"))
       sock.write(bert_request)
-      len = sock.read(4).unpack('N').first
+      lenheader = sock.read(4)
+      raise ProtocolError.new("Unable to read length header from server.") unless lenheader
+      len = lenheader.unpack('N').first
       bert_response = sock.read(len)
+      raise ProtocolError.new("Unable to read data from server.") unless bert_response
       sock.close
       bert_response
     end

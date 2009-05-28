@@ -77,6 +77,29 @@ class FunTest < Test::Unit::TestCase
         TCPSocket.expects(:new).returns(io)
         assert_equal "bar", @fun.sync_request("foo")
       end
+
+      should "raise a ProxyError when the length is invalid" do
+        io = stub()
+        io.expects(:write).with("\000\000\000\003")
+        io.expects(:write).with("foo")
+        io.expects(:read).with(4).returns(nil)
+        TCPSocket.expects(:new).returns(io)
+        assert_raises(BERTRPC::ProtocolError) do
+          @fun.sync_request("foo")
+        end
+      end
+
+      should "raise a ProxyError when the data is invalid" do
+        io = stub()
+        io.expects(:write).with("\000\000\000\003")
+        io.expects(:write).with("foo")
+        io.expects(:read).with(4).returns("\000\000\000\003")
+        io.expects(:read).with(3).returns(nil)
+        TCPSocket.expects(:new).returns(io)
+        assert_raises(BERTRPC::ProtocolError) do
+          @fun.sync_request("foo")
+        end
+      end
     end
 
     context "ruby request encoder" do
