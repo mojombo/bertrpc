@@ -78,7 +78,7 @@ class FunTest < Test::Unit::TestCase
         assert_equal "bar", @fun.sync_request("foo")
       end
 
-      should "raise a ProxyError when the length is invalid" do
+      should "raise a ProtocolError when the length is invalid" do
         io = stub()
         io.expects(:write).with("\000\000\000\003")
         io.expects(:write).with("foo")
@@ -89,7 +89,7 @@ class FunTest < Test::Unit::TestCase
         end
       end
 
-      should "raise a ProxyError when the data is invalid" do
+      should "raise a ProtocolError when the data is invalid" do
         io = stub()
         io.expects(:write).with("\000\000\000\003")
         io.expects(:write).with("foo")
