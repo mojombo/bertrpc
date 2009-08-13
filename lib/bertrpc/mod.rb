@@ -1,12 +1,14 @@
 module BERTRPC
   class Mod
-    def initialize(svc, mod)
+    def initialize(svc, type, mod)
       @svc = svc
+      @type = type
       @mod = mod
     end
 
     def method_missing(cmd, *args)
-      Fun.new(@svc, @mod, cmd)
+      args = [*args]
+      @type.new(@svc, @mod, cmd, args).execute
     end
   end
 end

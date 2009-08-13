@@ -7,8 +7,8 @@ module BERTRPC
       @port = port
     end
 
-    def method_missing(cmd, *args)
-      Mod.new(self, cmd)
+    def call
+      CallProxy.new(self)
     end
   end
 end

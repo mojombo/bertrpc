@@ -21,8 +21,8 @@ class ServiceTest < Test::Unit::TestCase
       assert_equal 9941, @svc.port
     end
 
-    should "return a Mod instance" do
-      assert @svc.mymod.is_a?(BERTRPC::Mod)
+    should "return a Call instance" do
+      assert @svc.call.is_a?(BERTRPC::CallProxy)
     end
   end
 end

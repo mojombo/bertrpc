@@ -7,5 +7,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'bertrpc'
 
-class Test::Unit::TestCase
+class Enc
+  include BERTRPC::Encodes
 end
