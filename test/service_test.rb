@@ -8,21 +8,35 @@ class ServiceTest < Test::Unit::TestCase
     end
   end
 
-  context "A Service Instance" do
+  context "A Service Instance's" do
     setup do
       @svc = BERTRPC::Service.new('localhost', 9941)
     end
 
-    should "return it's host" do
-      assert_equal 'localhost', @svc.host
+    context "accessors" do
+      should "return it's host" do
+        assert_equal 'localhost', @svc.host
+      end
+
+      should "return it's port" do
+        assert_equal 9941, @svc.port
+      end
     end
 
-    should "return it's port" do
-      assert_equal 9941, @svc.port
+    context "call method" do
+      should "return a call type Request" do
+        req = @svc.call
+        assert req.is_a?(BERTRPC::Request)
+        assert_equal :call, req.kind
+      end
     end
 
-    should "return a Call instance" do
-      assert @svc.call.is_a?(BERTRPC::CallProxy)
+    context "cast method" do
+      should "return a cast type Request" do
+        req = @svc.cast
+        assert req.is_a?(BERTRPC::Request)
+        assert_equal :cast, req.kind
+      end
     end
   end
 end

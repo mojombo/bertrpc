@@ -10,6 +10,8 @@ module BERTRPC
       case ruby_response[0]
         when :reply
           deconvert(ruby_response[1])
+        when :noreply
+          nil
         when :error
           error(ruby_response[1])
         else

@@ -1,23 +1,24 @@
 module BERTRPC
-  class Call
+  class Action
     include Encodes
     
-    def initialize(svc, mod, fun, args)
+    def initialize(svc, req, mod, fun, args)
       @svc = svc
+      @req = req
       @mod = mod
       @fun = fun
       @args = args
     end
 
     def execute
-      bert_request = encode_ruby_request([:call, @mod, @fun, @args])
-      bert_response = sync_request(bert_request)
+      bert_request = encode_ruby_request([@req.kind, @mod, @fun, @args])
+      bert_response = transaction(bert_request)
       decode_bert_response(bert_response)
     end
 
     #private
 
-    def sync_request(bert_request)
+    def transaction(bert_request)
       sock = TCPSocket.new(@svc.host, @svc.port)
       sock.write([bert_request.length].pack("N"))
       sock.write(bert_request)

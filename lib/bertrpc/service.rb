@@ -8,7 +8,11 @@ module BERTRPC
     end
 
     def call
-      CallProxy.new(self)
+      Request.new(self, :call)
+    end
+
+    def cast
+      Request.new(self, :cast)
     end
   end
 end

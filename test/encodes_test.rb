@@ -33,19 +33,25 @@ class EncodesTest < Test::Unit::TestCase
         assert_equal [1, 2, "foo", :bar, 3.14], @enc.deconvert([1, 2, "foo", :bar, 3.14])
       end
     end
-    
+
     context "ruby request encoder" do
       should "return BERT-RPC encoded request" do
         bert = "\203h\004d\000\004calld\000\005mymodd\000\005myfunh\003a\001a\002a\003"
         assert_equal bert, @enc.encode_ruby_request([:call, :mymod, :myfun, [1, 2, 3]])
       end
     end
-    
+
     context "bert response decoder" do
-      should "return response when successful" do
+      should "return response when reply" do
         req = @enc.encode_ruby_request([:reply, [1, 2, 3]])
         res = @enc.decode_bert_response(req)
         assert_equal [1, 2, 3], res
+      end
+
+      should "return nil when noreply" do
+        req = @enc.encode_ruby_request([:noreply])
+        res = @enc.decode_bert_response(req)
+        assert_equal nil, res
       end
 
       should "raise a ProtocolError error when protocol level error is returned" do

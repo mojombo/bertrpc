@@ -17,21 +17,43 @@ BERTRPC is a Ruby BERT-RPC client library.
 Installation
 ------------
 
-    gem install mojombo-bertrpc -s http://gems.github.com
+From GemCutter:
+
+    gem install bertrpc
+
+From GitHub:
+
+    gem install mojombo-bertrpc -s http://gems.github.com \
+                                -s http://gemcutter.org
 
 
-Example
--------
+Examples
+--------
+
+Require the library and create a service:
 
     require 'bertrpc'
-    
     svc = BERTRPC::Service.new('localhost', 9999)
+
+Make a call:
+
     svc.call.calc.add(1, 2)
     # => 3
 
-This generates a BERT-RPC request like so:
+The underlying BERT-RPC transaction of the above call is:
 
     -> {call, calc, add, [1, 2]}
+    <- {reply, 3}
+
+Make a cast:
+
+    svc.cast.stats.incr
+    # => nil
+
+The underlying BERT-RPC transaction of the above cast is:
+
+    -> {cast, stats, incr, []}
+    <- {noreply}
 
 
 Copyright
