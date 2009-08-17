@@ -1,10 +1,11 @@
 module BERTRPC
   class Request
-    attr_accessor :kind
+    attr_accessor :kind, :options
 
-    def initialize(svc, kind)
+    def initialize(svc, kind, options)
       @svc = svc
       @kind = kind
+      @options = options
     end
 
     def method_missing(cmd, *args)

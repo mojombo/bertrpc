@@ -8,7 +8,10 @@ class EncodesTest < Test::Unit::TestCase
 
     context "converter" do
       should "convert top level hashes to BERT-RPC dict form" do
-        assert_equal([:dict, [:foo, 1], [:bar, 2]], @enc.convert({:foo => 1, :bar => 2}))
+        arr = @enc.convert({:foo => 1, :bar => 2})
+        a = [:dict, [:foo, 1], [:bar, 2]] == arr
+        b = [:dict, [:bar, 2], [:foo, 1]] == arr
+        assert(a || b)
       end
 
       should "convert nested hashes in the same way" do

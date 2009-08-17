@@ -18,4 +18,8 @@ module BERTRPC
   class ProxyError < BERTRPCError
 
   end
+
+  class InvalidOption < BERTRPCError
+
+  end
 end

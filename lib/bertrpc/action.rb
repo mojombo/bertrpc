@@ -1,7 +1,7 @@
 module BERTRPC
   class Action
     include Encodes
-    
+
     def initialize(svc, req, mod, fun, args)
       @svc = svc
       @req = req
@@ -18,10 +18,23 @@ module BERTRPC
 
     #private
 
+    def write(sock, bert)
+      sock.write([bert.length].pack("N"))
+      sock.write(bert)
+    end
+
     def transaction(bert_request)
       sock = TCPSocket.new(@svc.host, @svc.port)
-      sock.write([bert_request.length].pack("N"))
-      sock.write(bert_request)
+
+      if @req.options
+        if @req.options[:cache] && @req.options[:cache][0] == :validation
+          token = @req.options[:cache][1]
+          info_bert = encode_ruby_request([:info, :cache, [:validation, token]])
+          write(sock, info_bert)
+        end
+      end
+
+      write(sock, bert_request)
       lenheader = sock.read(4)
       raise ProtocolError.new("Unable to read length header from server.") unless lenheader
       len = lenheader.unpack('N').first
