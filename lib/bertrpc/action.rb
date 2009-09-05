@@ -42,6 +42,8 @@ module BERTRPC
       raise ProtocolError.new("Unable to read data from server.") unless bert_response
       sock.close
       bert_response
+    rescue Errno::ECONNREFUSED
+      raise ConnectionError.new("Unable to connect to #{@svc.host}:#{@svc.port}")
     end
   end
 end

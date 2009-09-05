@@ -3,6 +3,10 @@ module BERTRPC
 
   end
 
+  class ConnectionError < BERTRPCError
+
+  end
+
   class ProtocolError < BERTRPCError
 
   end
