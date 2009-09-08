@@ -36,10 +36,10 @@ module BERTRPC
 
       write(sock, bert_request)
       lenheader = sock.read(4)
-      raise ProtocolError.new("Unable to read length header from server.") unless lenheader
+      raise ProtocolError.new(ProtocolError::NO_HEADER) unless lenheader
       len = lenheader.unpack('N').first
       bert_response = sock.read(len)
-      raise ProtocolError.new("Unable to read data from server.") unless bert_response
+      raise ProtocolError.new(ProtocolError::NO_DATA) unless bert_response
       sock.close
       bert_response
     rescue Errno::ECONNREFUSED

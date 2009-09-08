@@ -67,8 +67,11 @@ class ActionTest < Test::Unit::TestCase
         io.expects(:write).with("foo")
         io.expects(:read).with(4).returns(nil)
         TCPSocket.expects(:new).returns(io)
-        assert_raises(BERTRPC::ProtocolError) do
+        begin
           @call.transaction("foo")
+          fail "Should have thrown an error"
+        rescue BERTRPC::ProtocolError => e
+          assert_equal 0, e.code
         end
       end
       
@@ -79,8 +82,11 @@ class ActionTest < Test::Unit::TestCase
         io.expects(:read).with(4).returns("\000\000\000\003")
         io.expects(:read).with(3).returns(nil)
         TCPSocket.expects(:new).returns(io)
-        assert_raises(BERTRPC::ProtocolError) do
+         begin
           @call.transaction("foo")
+          fail "Should have thrown an error"
+        rescue BERTRPC::ProtocolError => e
+          assert_equal 1, e.code
         end
       end
     end
