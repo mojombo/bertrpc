@@ -1,17 +1,25 @@
 module BERTRPC
   class BERTRPCError < StandardError
     attr_accessor :code
-    def initialize(msg = nil)
+
+    def initialize(msg = nil, klass = "Error", bt = [])
+      @bt = bt
+
       case msg
         when Array
           self.code = msg[0]
-          super(msg[1])
+          super("#{klass}: #{msg[1]}")
         when String
-          self.code = nil
-          super(msg)
+          self.code = 0
+          super("#{klass}: #{msg}")
         else
-          super(msg)
+          super("#{klass}: #{msg}")
       end
+    end
+
+    def backtrace
+      x = super
+      x ? ['---REMOTE---'] + @bt + ['---LOCAL---'] + x : x
     end
   end
 

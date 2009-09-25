@@ -20,15 +20,17 @@ module BERTRPC
     end
 
     def error(err)
-      case err[0]
+      level, code, klass, message, backtrace = err
+
+      case level
         when :protocol
-          raise ProtocolError.new(err[2])
+          raise ProtocolError.new([code, message], klass, backtrace)
         when :server
-          raise ServerError.new(err[2])
+          raise ServerError.new([code, message], klass, backtrace)
         when :user
-          raise UserError.new(err[2])
+          raise UserError.new([code, message], klass, backtrace)
         when :proxy
-          raise ProxyError.new(err[2])
+          raise ProxyError.new([code, message], klass, backtrace)
         else
           raise
       end

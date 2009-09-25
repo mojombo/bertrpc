@@ -58,28 +58,28 @@ class EncodesTest < Test::Unit::TestCase
       end
 
       should "raise a ProtocolError error when protocol level error is returned" do
-        req = @enc.encode_ruby_request([:error, [:protocol, 1, "invalid"]])
+        req = @enc.encode_ruby_request([:error, [:protocol, 1, "class", "invalid", []]])
         assert_raises(BERTRPC::ProtocolError) do
           @enc.decode_bert_response(req)
         end
       end
 
       should "raise a ServerError error when server level error is returned" do
-        req = @enc.encode_ruby_request([:error, [:server, 1, "invalid"]])
+        req = @enc.encode_ruby_request([:error, [:server, 1, "class", "invalid", []]])
         assert_raises(BERTRPC::ServerError) do
           @enc.decode_bert_response(req)
         end
       end
 
       should "raise a UserError error when user level error is returned" do
-        req = @enc.encode_ruby_request([:error, [:user, 1, "invalid"]])
+        req = @enc.encode_ruby_request([:error, [:user, 1, "class", "invalid", []]])
         assert_raises(BERTRPC::UserError) do
           @enc.decode_bert_response(req)
         end
       end
 
       should "raise a ProxyError error when proxy level error is returned" do
-        req = @enc.encode_ruby_request([:error, [:proxy, 1, "invalid"]])
+        req = @enc.encode_ruby_request([:error, [:proxy, 1, "class", "invalid", []]])
         assert_raises(BERTRPC::ProxyError) do
           @enc.decode_bert_response(req)
         end
