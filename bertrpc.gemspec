@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bertrpc}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Preston-Werner"]
-  s.date = %q{2009-09-07}
+  s.date = %q{2009-09-25}
   s.email = %q{tom@mojombo.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "lib/bertrpc/service.rb",
      "test/action_test.rb",
      "test/encodes_test.rb",
+     "test/error_test.rb",
      "test/mod_test.rb",
      "test/request_test.rb",
      "test/service_test.rb",
@@ -42,6 +43,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/action_test.rb",
      "test/encodes_test.rb",
+     "test/error_test.rb",
      "test/mod_test.rb",
      "test/request_test.rb",
      "test/service_test.rb",
