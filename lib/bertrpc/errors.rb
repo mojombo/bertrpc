@@ -1,26 +1,27 @@
 module BERTRPC
   class BERTRPCError < StandardError
-    attr_accessor :code
+    attr_accessor :code, :original_exception
 
-    def initialize(msg = nil, klass = "Error", bt = [])
-      @bt = bt
-
+    def initialize(msg = nil, klass = nil, bt = [])
       case msg
         when Array
-          self.code = msg[0]
-          super("#{klass}: #{msg[1]}")
-        when String
-          self.code = 0
-          super("#{klass}: #{msg}")
+          code, message = msg
         else
-          super("#{klass}: #{msg}")
+          code, message = [0, msg]
       end
-    end
 
-    def backtrace
-      x = super
-      x ? ['---REMOTE---'] + @bt + ['---LOCAL---'] + x : x
+      if klass
+        self.original_exception = RemoteError.new("#{klass}: #{message}")
+        self.original_exception.set_backtrace(bt)
+      end
+
+      self.code = code
+      super(message)
     end
+  end
+
+  class RemoteError < StandardError
+
   end
 
   class ConnectionError < BERTRPCError
