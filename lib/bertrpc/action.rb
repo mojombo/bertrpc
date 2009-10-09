@@ -11,7 +11,7 @@ module BERTRPC
     end
 
     def execute
-      bert_request = encode_ruby_request([@req.kind, @mod, @fun, @args])
+      bert_request = encode_ruby_request(t[@req.kind, @mod, @fun, @args])
       bert_response = transaction(bert_request)
       decode_bert_response(bert_response)
     end

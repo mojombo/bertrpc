@@ -1,4 +1,4 @@
-require 'erlectricity'
+require 'bert'
 require 'socket'
 
 require 'bertrpc/service'

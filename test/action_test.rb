@@ -20,24 +20,24 @@ class ActionTest < Test::Unit::TestCase
     end
 
     should "call with single-arity" do
-      req = @enc.encode_ruby_request([:call, :mymod, :myfun, [1]])
-      res = @enc.encode_ruby_request([:reply, 2])
+      req = @enc.encode_ruby_request(t[:call, :mymod, :myfun, [1]])
+      res = @enc.encode_ruby_request(t[:reply, 2])
       call = BERTRPC::Action.new(@svc, @req, :mymod, :myfun, [1])
       call.expects(:transaction).with(req).returns(res)
       assert_equal 2, call.execute
     end
 
     should "call with single-arity array" do
-      req = @enc.encode_ruby_request([:call, :mymod, :myfun, [[1, 2, 3]]])
-      res = @enc.encode_ruby_request([:reply, [4, 5, 6]])
+      req = @enc.encode_ruby_request(t[:call, :mymod, :myfun, [[1, 2, 3]]])
+      res = @enc.encode_ruby_request(t[:reply, [4, 5, 6]])
       call = BERTRPC::Action.new(@svc, @req, :mymod, :myfun, [[1, 2, 3]])
       call.expects(:transaction).with(req).returns(res)
       assert_equal [4, 5, 6], call.execute
     end
 
     should "call with multi-arity" do
-      req = @enc.encode_ruby_request([:call, :mymod, :myfun, [1, 2, 3]])
-      res = @enc.encode_ruby_request([:reply, [4, 5, 6]])
+      req = @enc.encode_ruby_request(t[:call, :mymod, :myfun, [1, 2, 3]])
+      res = @enc.encode_ruby_request(t[:reply, [4, 5, 6]])
       call = BERTRPC::Action.new(@svc, @req, :mymod, :myfun, [1, 2, 3])
       call.expects(:transaction).with(req).returns(res)
       assert_equal [4, 5, 6], call.execute
