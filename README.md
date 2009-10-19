@@ -11,20 +11,20 @@ it is released as 1.0.
 Description
 -----------
 
-BERTRPC is a Ruby BERT-RPC client library.
+BERT-RPC client library for Ruby.
+
+See the BERT-RPC specification at [bert-rpc.org](http://bert-rpc.org).
+
+This library currently only supports the following BERT-RPC features:
+
+* call
+* cast
 
 
 Installation
 ------------
 
-From GemCutter:
-
-    gem install bertrpc
-
-From GitHub:
-
-    gem install mojombo-bertrpc -s http://gems.github.com \
-                                -s http://gemcutter.org
+    gem install bertrpc -s http://gemcutter.org
 
 
 Examples
