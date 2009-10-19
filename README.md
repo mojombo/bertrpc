@@ -17,14 +17,14 @@ See the BERT-RPC specification at [bert-rpc.org](http://bert-rpc.org).
 
 This library currently only supports the following BERT-RPC features:
 
-* call
-* cast
+* `call` requests
+* `cast` requests
 
 
 Installation
 ------------
 
-    gem install bertrpc -s http://gemcutter.org
+    $ gem install bertrpc -s http://gemcutter.org
 
 
 Examples
