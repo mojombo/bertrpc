@@ -3,22 +3,16 @@ BERTRPC
 
 By Tom Preston-Werner (tom@mojombo.com)
 
-WARNING: This software is alpha and should not be used in production without
-extensive testing. You should not consider this project production ready until
-it is released as 1.0.
+BERT-RPC client library for Ruby. Makes it ridiculously simple to interface with BERT-RPC servers.
 
-
-Description
------------
-
-BERT-RPC client library for Ruby.
-
-See the BERT-RPC specification at [bert-rpc.org](http://bert-rpc.org).
+See the full BERT-RPC specification at [bert-rpc.org](http://bert-rpc.org).
 
 This library currently only supports the following BERT-RPC features:
 
 * `call` requests
 * `cast` requests
+
+BERTRPC was developed for GitHub and is currently in production use performing millions of RPC requests every day. The stability and performance have been exemplary.
 
 
 Installation
