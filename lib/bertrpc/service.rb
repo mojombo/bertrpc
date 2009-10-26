@@ -1,10 +1,11 @@
 module BERTRPC
   class Service
-    attr_accessor :host, :port
+    attr_accessor :host, :port, :timeout
 
-    def initialize(host, port)
+    def initialize(host, port, timeout = nil)
       @host = host
       @port = port
+      @timeout = timeout
     end
 
     def call(options = nil)
