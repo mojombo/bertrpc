@@ -42,7 +42,7 @@ module BERTRPC
       raise ProtocolError.new(ProtocolError::NO_DATA) unless bert_response
       sock.close
       bert_response
-    rescue Errno::ECONNREFUSED
+    rescue Errno::ECONNREFUSED, Timeout::Error
       raise ConnectionError.new("Unable to connect to #{@svc.host}:#{@svc.port}")
     end
 
