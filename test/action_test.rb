@@ -49,7 +49,7 @@ class ActionTest < Test::Unit::TestCase
         @req = @svc.call
         @call = BERTRPC::Action.new(@svc, @req, :mymod, :myfun, [])
       end
-    
+
       should "read and write BERT-Ps from the socket" do
         io = stub()
         io.expects(:write).with("\000\000\000\003")
@@ -57,7 +57,7 @@ class ActionTest < Test::Unit::TestCase
         io.expects(:read).with(4).returns("\000\000\000\003")
         io.expects(:read).with(3).returns("bar")
         io.expects(:close)
-        TCPSocket.expects(:new).returns(io)
+        @call.expects(:connect_to).returns(io)
         assert_equal "bar", @call.transaction("foo")
       end
 
@@ -66,7 +66,7 @@ class ActionTest < Test::Unit::TestCase
         io.expects(:write).with("\000\000\000\003")
         io.expects(:write).with("foo")
         io.expects(:read).with(4).returns(nil)
-        TCPSocket.expects(:new).returns(io)
+        @call.expects(:connect_to).returns(io)
         begin
           @call.transaction("foo")
           fail "Should have thrown an error"
@@ -74,14 +74,14 @@ class ActionTest < Test::Unit::TestCase
           assert_equal 0, e.code
         end
       end
-      
+
       should "raise a ProtocolError when the data is invalid" do
         io = stub()
         io.expects(:write).with("\000\000\000\003")
         io.expects(:write).with("foo")
         io.expects(:read).with(4).returns("\000\000\000\003")
         io.expects(:read).with(3).returns(nil)
-        TCPSocket.expects(:new).returns(io)
+        @call.expects(:connect_to).returns(io)
          begin
           @call.transaction("foo")
           fail "Should have thrown an error"

@@ -24,7 +24,7 @@ module BERTRPC
     end
 
     def transaction(bert_request)
-      sock = TCPSocket.new(@svc.host, @svc.port)
+      sock = connect_to(@svc.host, @svc.port, @svc.timeout)
 
       if @req.options
         if @req.options[:cache] && @req.options[:cache][0] == :validation
@@ -44,6 +44,20 @@ module BERTRPC
       bert_response
     rescue Errno::ECONNREFUSED
       raise ConnectionError.new("Unable to connect to #{@svc.host}:#{@svc.port}")
+    end
+
+    # Creates a socket object which does speedy, non-blocking reads
+    # and can perform reliable read timeouts.
+    #
+    # Raises Timeout::Error on timeout.
+    #
+    #   +host+ String address of the target TCP server
+    #   +port+ Integer port of the target TCP server
+    #   +timeout+ Optional Integer (in seconds) of the read timeout
+    def connect_to(host, port, timeout = nil)
+      io = BufferedIO.new(TCPSocket.new(host, port))
+      io.read_timeout = timeout
+      io
     end
   end
 end
