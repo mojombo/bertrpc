@@ -1,6 +1,8 @@
 module BERTRPC
   # Taken with love from memcache-client.
-  # See http://is.gd/4CWRA
+  #
+  # See http://is.gd/4CWRA for the code and
+  # http://is.gd/4CYde for the discussion.
   class BufferedIO < Net::BufferedIO # :nodoc:
     BUFSIZE = 1024 * 16
 
