@@ -42,8 +42,10 @@ module BERTRPC
       raise ProtocolError.new(ProtocolError::NO_DATA) unless bert_response
       sock.close
       bert_response
-    rescue Errno::ECONNREFUSED, Timeout::Error
+    rescue Errno::ECONNREFUSED
       raise ConnectionError.new("Unable to connect to #{@svc.host}:#{@svc.port}")
+    rescue Timeout::Error
+      raise ReadTimeoutError.new("No response from #{@svc.host}:#{@svc.port} in #{@svc.timeout}s")
     end
 
     # Creates a socket object which does speedy, non-blocking reads

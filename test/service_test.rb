@@ -2,8 +2,13 @@ require 'test_helper'
 
 class ServiceTest < Test::Unit::TestCase
   context "A Service" do
-    should "be created with host and port" do
+    should "be creatable with host and port" do
       svc = BERTRPC::Service.new('localhost', 9941)
+      assert svc.is_a?(BERTRPC::Service)
+    end
+
+    should "be creatable with host, port, and timeout" do
+      svc = BERTRPC::Service.new('localhost', 9941, 5)
       assert svc.is_a?(BERTRPC::Service)
     end
   end

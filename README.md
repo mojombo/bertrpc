@@ -56,6 +56,18 @@ The underlying BERT-RPC transaction of the above cast is:
     <- {noreply}
 
 
+Documentation
+-------------
+
+Creating a service:
+
+    # No timeout
+    svc = BERTRPC::Service.new('localhost', 9999)
+    
+    # 10s socket read timeout, raises BERTRPC::ReadTimeoutError
+    svc = BERTRPC::Service.new('localhost', 9999, 10)
+
+
 Copyright
 ---------
 
