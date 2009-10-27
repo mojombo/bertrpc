@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bertrpc}
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Preston-Werner"]
-  s.date = %q{2009-10-19}
+  s.date = %q{2009-10-27}
   s.email = %q{tom@mojombo.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "bertrpc.gemspec",
      "lib/bertrpc.rb",
      "lib/bertrpc/action.rb",
+     "lib/bertrpc/buffered_io.rb",
      "lib/bertrpc/encodes.rb",
      "lib/bertrpc/errors.rb",
      "lib/bertrpc/mod.rb",
