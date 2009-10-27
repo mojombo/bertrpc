@@ -28,6 +28,10 @@ module BERTRPC
 
   end
 
+  class ReadTimeoutError < BERTRPCError
+
+  end
+
   class ProtocolError < BERTRPCError
     NO_HEADER = [0, "Unable to read length header from server."]
     NO_DATA = [1, "Unable to read data from server."]
