@@ -1,3 +1,8 @@
+=
+  Major Changes
+    * Require bert-1.1.0 or greater
+    * Remove dependency on Erlectricity
+
 = 1.1.0 / 2009-10-27
   * Add read socket timeout
 
