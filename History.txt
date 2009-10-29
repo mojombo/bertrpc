@@ -1,4 +1,4 @@
-=
+= 1.1.1 / 2009-10-28
   Major Changes
     * Require bert-1.1.0 or greater
     * Remove dependency on Erlectricity
