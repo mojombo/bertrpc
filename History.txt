@@ -1,3 +1,7 @@
+= 0.4.1 / 2009-11-26
+  * Major changes
+    * Backport timeout option
+
 = 0.4.0 / 2009-10-08
   * Major changes
     * Convert to use BERT gem.
