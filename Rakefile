@@ -55,3 +55,6 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+task :console do
+  exec('irb -I lib -rbertrpc')
+end
