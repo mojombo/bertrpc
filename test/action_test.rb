@@ -101,6 +101,8 @@ class ActionTest < Test::Unit::TestCase
           fail "Should have thrown an error"
         rescue BERTRPC::ReadTimeoutError => e
           assert_equal 0, e.code
+          assert_equal 'localhost', e.host
+          assert_equal 9941, e.port
         end
       end
     end
