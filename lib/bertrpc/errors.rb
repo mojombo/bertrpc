@@ -28,8 +28,14 @@ module BERTRPC
 
   end
 
+  # Raised when we don't get a response from a server in a timely
+  # manner. This typically occurs in spite of a successful connection.
   class ReadTimeoutError < BERTRPCError
-
+    attr_reader :host, :port, :timeout
+    def initialize(host, port, timeout)
+      @host, @port, @timeout = host, port, timeout
+      super("No response from #{host}:#{port} in #{timeout}s")
+    end
   end
 
   class ProtocolError < BERTRPCError
