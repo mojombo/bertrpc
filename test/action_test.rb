@@ -94,7 +94,7 @@ class ActionTest < Test::Unit::TestCase
         io = stub()
         io.expects(:write).with("\000\000\000\003")
         io.expects(:write).with("foo")
-        io.expects(:read).with(4).raises(Timeout::Error)
+        io.expects(:read).with(4).raises(Errno::EAGAIN)
         @call.expects(:connect_to).returns(io)
         begin
           @call.transaction("foo")
