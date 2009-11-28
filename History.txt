@@ -1,3 +1,7 @@
+= 0.4.2 / 2009-11-27
+  * Major changes
+    * Switch to using raw socket timeouts over buffered io (Linux only)
+
 = 0.4.1 / 2009-11-26
   * Major changes
     * Backport timeout option
