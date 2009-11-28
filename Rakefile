@@ -9,8 +9,9 @@ begin
     gem.email = "tom@mojombo.com"
     gem.homepage = "http://github.com/mojombo/bertrpc"
     gem.authors = ["Tom Preston-Werner"]
-    gem.add_dependency('bert', '>= 1.1.0')
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_dependency('bert', '>= 1.1.0', '< 2.0.0')
+    # gem is a Gem::Specification...
+    # see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
 rescue LoadError
@@ -36,7 +37,6 @@ rescue LoadError
     abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
   end
 end
-
 
 task :default => :test
 
