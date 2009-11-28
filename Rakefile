@@ -56,5 +56,5 @@ Rake::RDocTask.new do |rdoc|
 end
 
 task :console do
-  exec('irb -I lib -rbertrpc')
+  exec('irb -Ilib -rbertrpc')
 end
