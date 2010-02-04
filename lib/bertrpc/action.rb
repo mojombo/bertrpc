@@ -23,8 +23,20 @@ module BERTRPC
       sock.write(bert)
     end
 
+    def read(sock, len, timeout)
+      data, size = [], 0
+      while size < len
+        r, w, e = select([sock], [], [], timeout)
+        raise Errno::EAGAIN if r.nil?
+        data << sock.recvfrom(len - size)
+        size += data.last.size
+      end
+      data.join ''
+    end
+
     def transaction(bert_request)
-      sock = connect_to(@svc.host, @svc.port, @svc.timeout)
+      timeout = @svc.timeout
+      sock = connect_to(@svc.host, @svc.port, timeout)
 
       if @req.options
         if @req.options[:cache] && @req.options[:cache][0] == :validation
@@ -35,10 +47,10 @@ module BERTRPC
       end
 
       write(sock, bert_request)
-      lenheader = sock.read(4)
+      lenheader = read(sock, 4, timeout)
       raise ProtocolError.new(ProtocolError::NO_HEADER) unless lenheader
       len = lenheader.unpack('N').first
-      bert_response = sock.read(len)
+      bert_response = read(sock, len, timeout)
       raise ProtocolError.new(ProtocolError::NO_DATA) unless bert_response
       sock.close
       bert_response
