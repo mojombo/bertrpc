@@ -13,6 +13,8 @@ module BERTRPC
       if klass
         self.original_exception = RemoteError.new("#{klass}: #{message}")
         self.original_exception.set_backtrace(bt)
+      else
+        self.original_exception = self
       end
 
       self.code = code
