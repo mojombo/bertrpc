@@ -28,8 +28,9 @@ module BERTRPC
       while size < len
         r, w, e = select([sock], [], [], timeout)
         raise Errno::EAGAIN if r.nil?
-        data << sock.recvfrom(len - size)
-        size += data.last.size
+        msg, sender = sock.recvfrom(len - size)
+        size += msg.size
+        data << msg
       end
       data.join ''
     end
