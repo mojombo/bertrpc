@@ -36,7 +36,7 @@ module BERTRPC
     end
 
     def transaction(bert_request)
-      timeout = @svc.timeout
+      timeout = @svc.timeout && Float(@svc.timeout)
       sock = connect_to(@svc.host, @svc.port, timeout)
 
       if @req.options
