@@ -1,3 +1,8 @@
+= 1.2.0 / 2010-02-09
+  * Enhancements
+    * Better timeouts courtesy of select(2)
+    * BERTRPCError gives self for original_exception if nil
+
 = 1.1.2 / 2009-11-27
   * Minor Changes
     * Add useful debugging information to ReadTimeoutError
