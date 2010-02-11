@@ -1,3 +1,7 @@
+=
+  * Bug fixes
+    * Restrict to IPv4
+
 = 1.2.0 / 2010-02-09
   * Enhancements
     * Better timeouts courtesy of select(2)

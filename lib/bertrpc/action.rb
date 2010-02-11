@@ -70,7 +70,7 @@ module BERTRPC
     #   +port+ Integer port of the target TCP server
     #   +timeout+ Optional Integer (in seconds) of the read timeout
     def connect_to(host, port, timeout = nil)
-      addr = Socket.getaddrinfo(host, nil)
+      addr = Socket.getaddrinfo(host, nil, Socket::AF_INET)
       sock = Socket.new(Socket.const_get(addr[0][0]), Socket::SOCK_STREAM, 0)
       sock.setsockopt Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1
 
