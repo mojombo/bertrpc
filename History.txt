@@ -1,4 +1,4 @@
-=
+= 1.2.1 / 2010-02-10
   * Bug fixes
     * Restrict to IPv4
 
