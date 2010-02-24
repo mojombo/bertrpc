@@ -1,3 +1,7 @@
+= 1.3.0 / 2010-02-24
+  * Enhancements
+    * Raise BERTRPC::ReadTimeout if remote connection is closed
+
 = 1.2.1 / 2010-02-10
   * Bug fixes
     * Restrict to IPv4
