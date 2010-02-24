@@ -57,7 +57,7 @@ module BERTRPC
       sock.close
       bert_response
     rescue Errno::ECONNREFUSED
-      raise ConnectionError.new("Unable to connect to #{@svc.host}:#{@svc.port}")
+      raise ConnectionError.new(@svc.host, @svc.port)
     rescue Errno::EAGAIN
       raise ReadTimeoutError.new(@svc.host, @svc.port, @svc.timeout)
     rescue Errno::ECONNRESET

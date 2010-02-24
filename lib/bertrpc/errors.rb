@@ -27,7 +27,11 @@ module BERTRPC
   end
 
   class ConnectionError < BERTRPCError
-
+    attr_reader :host, :port
+    def initialize(host, port)
+      @host, @port = host, port
+      super("Unable to connect to #{host}:#{port}")
+    end
   end
 
   # Raised when we don't get a response from a server in a timely
