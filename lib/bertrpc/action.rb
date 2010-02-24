@@ -29,6 +29,7 @@ module BERTRPC
         r, w, e = IO.select([sock], [], [], timeout)
         raise Errno::EAGAIN if r.nil?
         msg, sender = sock.recvfrom(len - size)
+        raise Errno::ECONNRESET if msg.size == 0 && r.first.eof?
         size += msg.size
         data << msg
       end
@@ -59,6 +60,8 @@ module BERTRPC
       raise ConnectionError.new("Unable to connect to #{@svc.host}:#{@svc.port}")
     rescue Errno::EAGAIN
       raise ReadTimeoutError.new(@svc.host, @svc.port, @svc.timeout)
+    rescue Errno::ECONNRESET
+      raise ReadError.new(@svc.host, @svc.port)
     end
 
     # Creates a socket object which does speedy, non-blocking reads
