@@ -40,6 +40,15 @@ module BERTRPC
     end
   end
 
+  # Raised when unexpected EOF is reached on the socket.
+  class ReadError < BERTRPCError
+    attr_reader :host, :port
+    def initialize(host, port)
+      @host, @port = host, port
+      super("Unable to read from #{host}:#{port}")
+    end
+  end
+
   class ProtocolError < BERTRPCError
     NO_HEADER = [0, "Unable to read length header from server."]
     NO_DATA = [1, "Unable to read data from server."]
