@@ -105,6 +105,22 @@ class ActionTest < Test::Unit::TestCase
           assert_equal 9941, e.port
         end
       end
+
+      should "raise a ReadError when the socket becomes unreadable" do
+        io = stub()
+        io.expects(:write).with("\000\000\000\003")
+        io.expects(:write).with("foo")
+        @call.expects(:read).with(io, 4, nil).raises(Errno::ECONNRESET)
+        @call.expects(:connect_to).returns(io)
+        begin
+          @call.transaction("foo")
+          fail "Should have thrown an error"
+        rescue BERTRPC::ReadError => e
+          assert_equal 0, e.code
+          assert_equal 'localhost', e.host
+          assert_equal 9941, e.port
+        end
+      end
     end
   end
 end
