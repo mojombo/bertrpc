@@ -19,7 +19,7 @@ module BERTRPC
     #private
 
     def write(sock, bert)
-      sock.write([bert.length].pack("N"))
+      sock.write([bert.bytesize].pack("N"))
       sock.write(bert)
     end
 
