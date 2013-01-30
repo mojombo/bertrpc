@@ -12,7 +12,7 @@ module BERTRPC
         when 'noreply'
           nil
         when 'error'
-          error(ruby_response[1].to_s)
+          error(ruby_response[1])
         else
           raise
       end
@@ -21,7 +21,7 @@ module BERTRPC
     def error(err)
       level, code, klass, message, backtrace = err
 
-      case level
+      case level.to_s
         when 'protocol'
           raise ProtocolError.new([code, message], klass, backtrace)
         when 'server'
