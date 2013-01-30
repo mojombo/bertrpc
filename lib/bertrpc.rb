@@ -17,4 +17,13 @@ module BERTRPC
   end
 
   VERSION = self.version
+
+  def self.serializer=(serializer)
+    @serializer = serializer
+  end
+  self.serializer = BERT
+
+  def self.serializer
+    @serializer
+  end
 end
