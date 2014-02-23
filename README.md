@@ -21,7 +21,7 @@ exemplary.
 Installation
 ------------
 
-    $ gem install bertrpc -s http://gemcutter.org
+    $ gem install bertrpc
 
 
 Examples
