@@ -83,10 +83,17 @@ module BERTRPC
         sock.setsockopt Socket::SOL_SOCKET, Socket::SO_RCVTIMEO, optval
         sock.setsockopt Socket::SOL_SOCKET, Socket::SO_SNDTIMEO, optval
 
-        sock.connect_nonblock(Socket.pack_sockaddr_in(port, addr[0][3]))
-        result = IO.select(nil, [sock], nil, timeout)
-        if result.nil?
-          raise ConnectionError.new(@svc.host, @svc.port)
+        begin
+          sock.connect_nonblock(Socket.pack_sockaddr_in(port, addr[0][3]))
+        rescue Errno::EINPROGRESS
+          result = IO.select(nil, [sock], nil, timeout)
+          if result.nil?
+            raise ConnectionError.new(@svc.host, @svc.port)
+          end
+          begin
+            sock.connect_nonblock(Socket.pack_sockaddr_in(port, addr[0][3]))
+          rescue Errno::EISCONN
+          end
         end
       else
         sock.connect(Socket.pack_sockaddr_in(port, addr[0][3]))
