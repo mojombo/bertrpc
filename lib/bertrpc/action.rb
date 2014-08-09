@@ -38,12 +38,7 @@ module BERTRPC
 
     def transaction(bert_request)
       timeout = @svc.timeout && Float(@svc.timeout)
-      begin
-        sock = connect_to(@svc.host, @svc.port, timeout)
-      rescue Errno::EAGAIN
-        raise ConnectionError.new(@svc.host, @svc.port)
-      end
-
+      sock = connect_to(@svc.host, @svc.port, timeout)
       if @req.options
         if @req.options[:cache] && @req.options[:cache][0] == :validation
           token = @req.options[:cache][1]
@@ -87,9 +82,16 @@ module BERTRPC
         optval = [secs, usecs].pack("l_2")
         sock.setsockopt Socket::SOL_SOCKET, Socket::SO_RCVTIMEO, optval
         sock.setsockopt Socket::SOL_SOCKET, Socket::SO_SNDTIMEO, optval
+
+        sock.connect_nonblock(Socket.pack_sockaddr_in(port, addr[0][3]))
+        result = IO.select(nil, [sock], nil, timeout)
+        if result.nil?
+          raise ConnectionError.new(@svc.host, @svc.port)
+        end
+      else
+        sock.connect(Socket.pack_sockaddr_in(port, addr[0][3]))
       end
 
-      sock.connect(Socket.pack_sockaddr_in(port, addr[0][3]))
       sock
     end
   end
