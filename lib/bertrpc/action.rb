@@ -38,7 +38,7 @@ module BERTRPC
 
     def transaction(bert_request)
       timeout = @svc.timeout && Float(@svc.timeout)
-      sock = connect_to(@svc.host, @svc.port, timeout)
+      sock = connect_to(@svc.host, @svc.port, @svc.connect_timeout)
       if @req.options
         if @req.options[:cache] && @req.options[:cache][0] == :validation
           token = @req.options[:cache][1]
@@ -72,6 +72,7 @@ module BERTRPC
     #   +port+ Integer port of the target TCP server
     #   +timeout+ Optional Integer (in seconds) of the read timeout
     def connect_to(host, port, timeout = nil)
+      timeout = timeout && Float(timeout)
       addr = Socket.getaddrinfo(host, nil, Socket::AF_INET)
       sock = Socket.new(Socket.const_get(addr[0][0]), Socket::SOCK_STREAM, 0)
       sock.setsockopt Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1
