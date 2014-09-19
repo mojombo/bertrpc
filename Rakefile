@@ -1,23 +1,6 @@
 require 'rubygems'
 require 'rake'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "bertrpc"
-    gem.summary = %Q{BERTRPC is a Ruby BERT-RPC client library.}
-    gem.email = "tom@mojombo.com"
-    gem.homepage = "http://github.com/mojombo/bertrpc"
-    gem.authors = ["Tom Preston-Werner"]
-    gem.add_dependency('bert', '>= 1.1.0', '< 2.0.0')
-    # gem is a Gem::Specification...
-    # see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
-end
-
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
@@ -40,7 +23,7 @@ end
 
 task :default => :test
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   if File.exist?('VERSION.yml')
     config = YAML.load(File.read('VERSION.yml'))
