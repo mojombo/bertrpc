@@ -2,9 +2,9 @@ Gem::Specification.new do |s|
   s.name = %q{bertrpc}
   s.version = "1.3.1"
 
-  s.authors = ["Tom Preston-Werner"]
-  s.date = %q{2010-02-24}
-  s.email = %q{tom@mojombo.com}
+  s.authors = ["GitHub, Inc."]
+  s.date = %q{2014-08-19}
+  s.email = %q{systems@github.com}
 
   s.files = `git ls-files`.split("\n") - %w[Gemfile Gemfile.lock]
   s.test_files = `git ls-files -- test`.split("\n").select { |f| f =~ /_test.rb$/ }
