@@ -15,10 +15,5 @@ Gem::Specification.new do |s|
   s.summary = %q{BERTRPC is a Ruby BERT-RPC client library.}
 
   s.add_runtime_dependency(%q<bert>, [">= 1.1.0", "< 2.0.0"])
-
-  s.add_development_dependency "rake"
-  s.add_development_dependency "minitest", "4.7.0"
-  s.add_development_dependency "shoulda"
-  s.add_development_dependency "mocha"
 end
 
