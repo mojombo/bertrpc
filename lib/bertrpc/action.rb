@@ -24,16 +24,15 @@ module BERTRPC
     end
 
     def read(sock, len, timeout)
-      data, size = [], 0
-      while size < len
-        r, w, e = IO.select([sock], [], [], timeout)
-        raise Errno::EAGAIN if r.nil?
-        msg, sender = sock.recvfrom(len - size)
-        raise Errno::ECONNRESET if msg.size == 0
-        size += msg.size
-        data << msg
+      buff = Timeout.timeout(timeout, Errno::EGAIN) do
+        sock.read(len)
       end
-      data.join ''
+
+      if buff.length < len
+        raise Errno::ECONNRESET
+      end
+
+      buff
     end
 
     def transaction(bert_request)
